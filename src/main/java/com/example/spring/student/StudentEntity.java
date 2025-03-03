@@ -35,7 +35,7 @@ public class StudentEntity {
 	@Column(nullable = false, length = 50)
 	private String name;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String studentId;
 
 	@Column(nullable = false, length = 20)

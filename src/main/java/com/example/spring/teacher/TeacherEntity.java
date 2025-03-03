@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -52,7 +53,7 @@ public class TeacherEntity {
 	@Column()
 	private String phoneNumber;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	@Column(columnDefinition = "JSON")
@@ -65,7 +66,6 @@ public class TeacherEntity {
 	private List<ClassroomEntity> classrooms = new ArrayList<>();
 
 	// Chỉ áp dụng với mysql
-
 	// Chuyển List<String> → JSON khi lưu vào database
 	public void setSubjects(List<String> subjects) {
 		ObjectMapper objectMapper = new ObjectMapper();

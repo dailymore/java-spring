@@ -87,6 +87,13 @@
 				<artifactId>jjwt</artifactId>
 				<version>0.9.1</version>
 		</dependency>
+
+		<dependency>
+				<groupId>de.mkammerer</groupId>
+				<artifactId>argon2-jvm</artifactId>
+				<version>2.11</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
