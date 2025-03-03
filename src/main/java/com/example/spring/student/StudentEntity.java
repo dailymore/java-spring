@@ -1,6 +1,9 @@
 package com.example.spring.student;
 
 import com.example.spring.classroom.ClassroomEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,6 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class StudentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +58,7 @@ public class StudentEntity {
 	private String password;
 
 	@ManyToOne
+	@JsonManagedReference
 	@JoinColumn(name = "student_class_id")
 	private ClassroomEntity studentClass;
 
