@@ -1,6 +1,5 @@
-package com.example.spring.student;
+package com.example.spring.teacher;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("student")
-public class StudentController {
-	@Autowired
-	private StudentService studentService;
+@RequestMapping("teacher")
+public class TeacherController {
 
-	@GetMapping()
-	List<StudentEntity> getAllStudents() {
-		return studentService.getAllStudents();
-	}
+	@Autowired
+	TeacherService teacherService;
 
 	@GetMapping("/{id}")
-	Optional<StudentEntity> getOneStudents(@PathVariable Long id) {
-		return studentService.getOneStudent(id);
+	Optional<TeacherEntity> getOneTeacher(@PathVariable Long id) {
+		return this.teacherService.getOneTeacher(id);
 	}
-
 }

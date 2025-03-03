@@ -47,112 +47,107 @@ public class DataSeeder {
 			ClassroomRepository classroomRepository,
 			StudentRepository studentRepository) {
 
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
+		// Tạo danh sách lớp học
+		ClassroomEntity classA = new ClassroomEntity(
+				null,
+				"Class A",
+				"CLS-A",
+				"Lớp học lập trình",
+				30, null,
+				new ArrayList<>());
+		ClassroomEntity classB = new ClassroomEntity(
+				null,
+				"Class B",
+				"CLS-B",
+				"Lớp học toán học",
+				25,
+				null,
+				new ArrayList<>());
 
-			// Tạo danh sách lớp học
-			ClassroomEntity classA = new ClassroomEntity(
-					null,
-					"Class A",
-					"CLS-A",
-					"Lớp học lập trình",
-					30, null,
-					new ArrayList<>());
-			ClassroomEntity classB = new ClassroomEntity(
-					null,
-					"Class B",
-					"CLS-B",
-					"Lớp học toán học",
-					25,
-					null,
-					new ArrayList<>());
+		// Tạo danh sách giáo viên
+		TeacherEntity teacher1 = new TeacherEntity(
+				null,
+				"Nguyễn Văn A",
+				"ĐH Bách Khoa",
+				40,
+				15,
+				"0123456789",
+				"a@gmail.com",
+				List.of("Math", "Physics"),
+				this.password,
+				null);
+		TeacherEntity teacher2 = new TeacherEntity(
+				null,
+				"Trần Thị B",
+				"ĐH Quốc Gia",
+				35,
+				10,
+				"0987654321",
+				"b@gmail.com",
+				List.of("Programming", "AI"),
+				this.password,
+				null);
 
-			// Tạo danh sách giáo viên
-			TeacherEntity teacher1 = new TeacherEntity(
-					null,
-					"Nguyễn Văn A",
-					"ĐH Bách Khoa",
-					40,
-					15,
-					"0123456789",
-					"a@gmail.com",
-					objectMapper.writeValueAsString(List.of("Math", "Physics")),
-					this.password,
-					null);
-			TeacherEntity teacher2 = new TeacherEntity(
-					null,
-					"Trần Thị B",
-					"ĐH Quốc Gia",
-					35,
-					10,
-					"0987654321",
-					"b@gmail.com",
-					objectMapper.writeValueAsString(List.of("Programming", "AI")),
-					this.password,
-					null);
+		// Tạo danh sách sinh viên
+		StudentEntity student1 = new StudentEntity(
+				null,
+				"Lê Hồng Đức",
+				"S001",
+				"Class A",
+				"Hà Nội",
+				20,
+				3.5f,
+				this.password,
+				classA);
+		StudentEntity student2 = new StudentEntity(
+				null,
+				"Nguyễn Hoàng Anh",
+				"S002",
+				"Class A",
+				"HCM",
+				21,
+				3.8f,
+				this.password,
+				classA);
+		StudentEntity student3 = new StudentEntity(null,
+				"Phạm Văn Cường",
+				"S003",
+				"Class B",
+				"Đà Nẵng",
+				22,
+				3.2f,
+				this.password,
+				classB);
 
-			// Tạo danh sách sinh viên
-			StudentEntity student1 = new StudentEntity(
-					null,
-					"Lê Hồng Đức",
-					"S001",
-					"Class A",
-					"Hà Nội",
-					20,
-					3.5f,
-					this.password,
-					classA);
-			StudentEntity student2 = new StudentEntity(
-					null,
-					"Nguyễn Hoàng Anh",
-					"S002",
-					"Class A",
-					"HCM",
-					21,
-					3.8f,
-					this.password,
-					classA);
-			StudentEntity student3 = new StudentEntity(null,
-					"Phạm Văn Cường",
-					"S003",
-					"Class B",
-					"Đà Nẵng",
-					22,
-					3.2f,
-					this.password,
-					classB);
+		// Liên kết nhiều - nhiều (thằng nào định nghĩa bảng join thì mới được join)
+		classA.getTeachers().add(teacher1);
+		classA.getTeachers().add(teacher2);
+		classB.getTeachers().add(teacher1);
 
-			// Liên kết nhiều - nhiều (thằng nào định nghĩa bảng join thì mới được join)
-			classA.getTeachers().add(teacher1);
-			classA.getTeachers().add(teacher2);
-			classB.getTeachers().add(teacher1);
+		// Lưu vào database
+		// classroomRepository.saveAll(List.of(classA, classB));
+		// teacherRepository.saveAll(List.of(teacher1, teacher2));
+		// studentRepository.saveAll(List.of(student1, student2, student3));
 
-			// Lưu vào database
-			// classroomRepository.saveAll(List.of(classA, classB));
-			// teacherRepository.saveAll(List.of(teacher1, teacher2));
-			// studentRepository.saveAll(List.of(student1, student2, student3));
+		// Tạo thread pool để chạy đa luồng
+		ExecutorService executor = Executors.newFixedThreadPool(3);
 
-			// Tạo thread pool để chạy đa luồng
-			ExecutorService executor = Executors.newFixedThreadPool(3);
+		// Chạy các tác vụ lưu dữ liệu đồng thời
+		CompletableFuture<Void> saveClassrooms = CompletableFuture
+				.runAsync(() -> classroomRepository.saveAll(List.of(classA, classB)), executor);
 
-			// Chạy các tác vụ lưu dữ liệu đồng thời
-			CompletableFuture<Void> saveClassrooms = CompletableFuture
-					.runAsync(() -> classroomRepository.saveAll(List.of(classA, classB)), executor);
+		CompletableFuture<Void> saveTeachers = CompletableFuture
+				.runAsync(() -> teacherRepository.saveAll(List.of(teacher1, teacher2)), executor);
 
-			CompletableFuture<Void> saveTeachers = CompletableFuture
-					.runAsync(() -> teacherRepository.saveAll(List.of(teacher1, teacher2)), executor);
+		CompletableFuture<Void> saveStudents = CompletableFuture
+				.runAsync(() -> studentRepository.saveAll(List.of(student1, student2, student3)), executor);
 
-			CompletableFuture<Void> saveStudents = CompletableFuture
-					.runAsync(() -> studentRepository.saveAll(List.of(student1, student2, student3)), executor);
+		// Chờ tất cả các tác vụ hoàn thành
+		CompletableFuture.allOf(saveClassrooms, saveTeachers, saveStudents).join();
 
-			// Chờ tất cả các tác vụ hoàn thành
-			CompletableFuture.allOf(saveClassrooms, saveTeachers, saveStudents).join();
+		// Đóng thread pool
+		executor.shutdown();
 
-			// Đóng thread pool
-			executor.shutdown();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
+
 }

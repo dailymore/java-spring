@@ -19,7 +19,6 @@ public class StudentService {
 	}
 
 	public Optional<StudentEntity> getOneStudent(long id) {
-
 		return this.studentRepository.findById(id);
 	}
 }

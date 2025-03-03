@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.spring.classroom.ClassroomEntity;
+import com.example.spring.utils.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -56,8 +56,9 @@ public class TeacherEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(columnDefinition = "JSON")
-	private String subject;
+	@Column(name = "subject", columnDefinition = "JSON")
+	@Convert(converter = JsonConverter.class)
+	private List<String> subject;
 
 	@Column(nullable = false)
 	private String password;
@@ -65,25 +66,25 @@ public class TeacherEntity {
 	@ManyToMany(mappedBy = "teachers")
 	private List<ClassroomEntity> classrooms = new ArrayList<>();
 
-	// Chỉ áp dụng với mysql
-	// Chuyển List<String> → JSON khi lưu vào database
-	public void setSubjects(List<String> subjects) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			this.subject = objectMapper.writeValueAsString(subjects);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException("JSON writing error", e);
-		}
-	}
+	// // Chỉ áp dụng với mysql
+	// // Chuyển List<String> → JSON khi lưu vào database
+	// public void setSubjects(List<String> subjects) {
+	// ObjectMapper objectMapper = new ObjectMapper();
+	// try {
+	// this.subject = objectMapper.writeValueAsString(subjects);
+	// } catch (JsonProcessingException e) {
+	// throw new RuntimeException("JSON writing error", e);
+	// }
+	// }
 
-	// Chuyển JSON → List khi lấy dữ liệu
-	public List<String> getSubjects() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			return objectMapper.readValue(this.subject, new TypeReference<List<String>>() {
-			});
-		} catch (Exception e) {
-			throw new RuntimeException("JSON reading error", e);
-		}
-	}
+	// // Chuyển JSON → List khi lấy dữ liệu
+	// public List<?> getSubjects() {
+	// ObjectMapper objectMapper = new ObjectMapper();
+
+	// try {
+	// return objectMapper.readValue(this.subject, List.class);
+	// } catch (Exception e) {
+	// throw new RuntimeException("JSON reading error", e);
+	// }
+	// }
 }
