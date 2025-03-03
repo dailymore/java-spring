@@ -52,13 +52,13 @@ public class TeacherEntity {
 	@Column()
 	private String phoneNumber;
 
-	@Column()
+	@Column(nullable = false)
 	private String email;
 
 	@Column(columnDefinition = "JSON")
 	private String subject;
 
-	@Column()
+	@Column(nullable = false)
 	private String password;
 
 	@ManyToMany(mappedBy = "teachers")
