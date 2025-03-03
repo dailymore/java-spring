@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("student")
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
 
 	@GetMapping()
-	List<StudentEntity> getAllProducts() {
+	List<StudentEntity> getAllStudents() {
 
-		return studentService.getAllProducts();
+		return studentService.getAllStudents();
 	}
 }

@@ -13,8 +13,8 @@ public class StudentService {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	public List<StudentEntity> getAllProducts() {
+	public List<StudentEntity> getAllStudents() {
+
 		return this.studentRepository.findAll();
 	}
-
 }
