@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.example.spring.student.StudentEntity;
 import com.example.spring.teacher.TeacherEntity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -22,6 +21,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -57,6 +57,7 @@ public class ClassroomEntity {
 	@Column(nullable = false)
 	private int size;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<StudentEntity> students = new ArrayList<StudentEntity>();
 

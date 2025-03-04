@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.example.spring.classroom.ClassroomEntity;
 import com.example.spring.utils.JsonConverter;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.fasterxml.jackson.core.JsonProcessingException;
+// import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -57,7 +57,7 @@ public class TeacherEntity {
 	private String email;
 
 	@Column(name = "subject", columnDefinition = "JSON")
-	@Convert(converter = JsonConverter.class)
+	// @Convert(converter = JsonConverter.class)
 	private List<String> subject;
 
 	@Column(nullable = false)

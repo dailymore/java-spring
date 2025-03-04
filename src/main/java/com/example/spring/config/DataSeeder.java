@@ -8,7 +8,6 @@ import com.example.spring.teacher.TeacherEntity;
 import com.example.spring.teacher.repository.TeacherRepository;
 import com.example.spring.utils.ArgonHash;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
