@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.example.spring.classroom.ClassroomEntity;
 import com.example.spring.utils.JsonConverter;
-// import com.fasterxml.jackson.core.JsonProcessingException;
-// import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -31,6 +32,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class TeacherEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +59,7 @@ public class TeacherEntity {
 	private String email;
 
 	@Column(name = "subject", columnDefinition = "JSON")
-	// @Convert(converter = JsonConverter.class)
+	@Convert(converter = JsonConverter.class)
 	private List<String> subject;
 
 	@Column(nullable = false)
@@ -66,25 +68,4 @@ public class TeacherEntity {
 	@ManyToMany(mappedBy = "teachers")
 	private List<ClassroomEntity> classrooms = new ArrayList<>();
 
-	// // Chỉ áp dụng với mysql
-	// // Chuyển List<String> → JSON khi lưu vào database
-	// public void setSubjects(List<String> subjects) {
-	// ObjectMapper objectMapper = new ObjectMapper();
-	// try {
-	// this.subject = objectMapper.writeValueAsString(subjects);
-	// } catch (JsonProcessingException e) {
-	// throw new RuntimeException("JSON writing error", e);
-	// }
-	// }
-
-	// // Chuyển JSON → List khi lấy dữ liệu
-	// public List<?> getSubjects() {
-	// ObjectMapper objectMapper = new ObjectMapper();
-
-	// try {
-	// return objectMapper.readValue(this.subject, List.class);
-	// } catch (Exception e) {
-	// throw new RuntimeException("JSON reading error", e);
-	// }
-	// }
 }

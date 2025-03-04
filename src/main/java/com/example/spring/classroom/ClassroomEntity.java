@@ -6,7 +6,6 @@ import java.util.List;
 import com.example.spring.student.StudentEntity;
 import com.example.spring.teacher.TeacherEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
@@ -37,7 +36,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id") // ✅ Tránh vòng lặp vô hạn
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ClassroomEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +56,6 @@ public class ClassroomEntity {
 	@Column(nullable = false)
 	private int size;
 
-	@JsonManagedReference
 	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<StudentEntity> students = new ArrayList<StudentEntity>();
 

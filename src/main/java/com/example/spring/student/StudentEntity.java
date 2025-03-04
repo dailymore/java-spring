@@ -3,7 +3,6 @@ package com.example.spring.student;
 import com.example.spring.classroom.ClassroomEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,7 +58,6 @@ public class StudentEntity {
 	private String password;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "student_class_id")
 	private ClassroomEntity studentClass;
 
