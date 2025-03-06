@@ -65,17 +65,17 @@ public class Seeder implements CommandLineRunner {
 			return;
 
 		// add student in class , possition by index :))))) ( 1-n )
+		dataSeeder.getStudents().get(0).setStudentClass(dataSeeder.getClassrooms().get(0));
 		dataSeeder.getStudents().get(1).setStudentClass(dataSeeder.getClassrooms().get(1));
-		dataSeeder.getStudents().get(2).setStudentClass(dataSeeder.getClassrooms().get(2));
-		dataSeeder.getStudents().get(3).setStudentClass(dataSeeder.getClassrooms().get(1));
+		dataSeeder.getStudents().get(2).setStudentClass(dataSeeder.getClassrooms().get(0));
 
 		// add teacher in class ( m-m )
-		dataSeeder.getClassrooms().get(1).setTeachers(List.of(dataSeeder.getTeachers().remove(1)));
-		dataSeeder.getClassrooms().get(2).setTeachers(dataSeeder.getTeachers());
+		dataSeeder.getClassrooms().get(0).setTeachers(List.of(dataSeeder.getTeachers().remove(0)));
+		dataSeeder.getClassrooms().get(1).setTeachers(dataSeeder.getTeachers());
 
-		studentRepository.saveAll(dataSeeder.getStudents());
 		classroomRepository.saveAll(dataSeeder.getClassrooms());
 		teacherRepository.saveAll(dataSeeder.getTeachers());
+		studentRepository.saveAll(dataSeeder.getStudents());
 
 		seedData();
 	}
