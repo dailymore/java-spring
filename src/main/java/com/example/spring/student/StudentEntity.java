@@ -42,9 +42,6 @@ public class StudentEntity {
 	@Column(nullable = false, unique = true)
 	private String studentId;
 
-	@Column(nullable = false, length = 20)
-	private String classRoom;
-
 	@Column()
 	private String address;
 
@@ -60,5 +57,4 @@ public class StudentEntity {
 	@ManyToOne
 	@JoinColumn(name = "student_class_id")
 	private ClassroomEntity studentClass;
-
 }

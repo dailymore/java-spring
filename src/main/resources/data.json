@@ -1,5 +1,5 @@
 {
-  "teacher": [
+  "teachers": [
     {
       "id": null,
       "name": "Nguyễn Văn A",
@@ -23,23 +23,23 @@
       "password": "$argon2i$v=19$m=65536,t=10,p=1$jkPK5Oq0KyYuVR5JdnrSMA$fUM7mD7ph1z5giS+NclPko3mSZxYpdMLn4iDIGYz4ZE"
     }
   ],
-  "classroom": [
+  "classrooms": [
     {
       "id": null,
       "name": "Class A",
       "code": "CLS-A",
       "description": "Lớp học lập trình",
-      "capacity": 30
+      "size": 30
     },
     {
       "id": null,
       "name": "Class B",
       "code": "CLS-B",
       "description": "Lớp học toán học",
-      "capacity": 25
+      "size": 25
     }
   ],
-  "student": [
+  "students": [
     {
       "id": null,
       "name": "Lê Hồng Đức",

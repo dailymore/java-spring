@@ -48,7 +48,7 @@ public class ClassroomEntity {
 
 	@EqualsAndHashCode.Include
 	@Column(nullable = false, length = 20)
-	private String alias;
+	private String code;
 
 	@Column()
 	private String description;
