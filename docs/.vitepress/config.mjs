@@ -5,7 +5,7 @@ export default defineConfig({
   title: "Spring Docs",
   description: "Java Spring training",
   outDir: "../dist",
-  srcDir: "src",
+  base: "/java-spring/",
   vite: { server: { port: 2000 } },
   themeConfig: {
     nav: [
