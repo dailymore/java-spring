@@ -4,7 +4,7 @@ import formattedSidebars from "../sidebars";
 export default defineConfig({
   title: "Spring Docs",
   description: "Java Spring training",
-  outDir: "../../dist",
+  outDir: "../dist",
   srcDir: "src",
   vite: { server: { port: 2000 } },
   themeConfig: {
