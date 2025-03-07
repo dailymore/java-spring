@@ -2,3 +2,5 @@
 
 ### Go to this site to access docs and checkout note for this project
 [![Java Spring](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat&logo=java&logoColor=white)](https://cmhehe176.github.io/java-spring)
+
+![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMjUuNSAxNS42MzhDMTYuMzA4IDExLjA2MSAxNS4wNjMgMC41IDE1LjA2MyAwLjVIMzcuNDM3QzM3LjQzNyAwLjUgMzYuMTkgMTEuMDYxIDI2Ljk5OCAxNS42MzhWMTguOTM4SDI1LjVWMjAuMjVIMjYuOTk4VjIzLjAzNkgyNS41VjI1SDI2Ljk5OFYyNi41SDI1LjVWMjcuNzY3SDE5LjVDMTkuNSAyNy43NjcgMTkuNSAyNi41IDE5LjUgMjYuNVYyNS4wMzNIMTYuOTk4VjIzLjAzM0gxOS41VjIwLjI1SDE2Ljk5OFYxOC45MzhIMTkuNVYxNS42MzhIMjUuNVYxOC45MzhWMTUuNjM4WiIgZmlsbD0iIzU2N0Y4NyIvPgo8L3N2Zz4=)
