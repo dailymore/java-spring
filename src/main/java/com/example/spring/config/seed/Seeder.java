@@ -60,29 +60,45 @@ public class Seeder implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (teacherRepository.count() > 0 && classroomRepository.count() > 0 &&
-				studentRepository.count() > 0)
+		if (teacherRepository.count() > 0 && classroomRepository.count() > 0 && studentRepository.count() > 0)
 			return;
-
-		// add student in class , possition by index :))))) ( 1-n )
-		dataSeeder.getStudents().get(0).setStudentClass(dataSeeder.getClassrooms().get(0));
-		dataSeeder.getStudents().get(1).setStudentClass(dataSeeder.getClassrooms().get(1));
-		dataSeeder.getStudents().get(2).setStudentClass(dataSeeder.getClassrooms().get(0));
-
-		// add teacher in class ( m-m )
-		dataSeeder.getClassrooms().get(0).setTeachers(List.of(dataSeeder.getTeachers().remove(0)));
-		dataSeeder.getClassrooms().get(1).setTeachers(dataSeeder.getTeachers());
-
-		classroomRepository.saveAll(dataSeeder.getClassrooms());
-		teacherRepository.saveAll(dataSeeder.getTeachers());
-		studentRepository.saveAll(dataSeeder.getStudents());
 
 		seedData();
 	}
 
 	@Transactional
 	void seedData() {
-		System.out.println("run seed");
-	}
+		/**
+		 * ! Quy tắc lưu khi có relations.
+		 ** 1. Luôn lưu các entity "độc lập" trước, không bị phụ thuộc (TeacherEntity)
+		 ** 2. Luôn lưu entity "cha" trước khi liên kết với entity "con"
+		 ** 3. Không gán entity chưa lưu vào một entity khác
+		 */
 
+		// todo: Cập nhật mật khẩu cho tất cả giáo viên & học sinh
+		dataSeeder.getStudents().forEach(student -> student.setPassword(this.password));
+		dataSeeder.getTeachers().forEach(teacher -> teacher.setPassword(this.password));
+
+		// * Lưu bảng không bị phụ thuộc trước
+		teacherRepository.saveAll(dataSeeder.getTeachers());
+
+		// todo: Liên kết học sinh với lớp học
+		dataSeeder.getStudents().get(0).setStudentClass(dataSeeder.getClassrooms().get(0));
+		dataSeeder.getStudents().get(1).setStudentClass(dataSeeder.getClassrooms().get(1));
+		dataSeeder.getStudents().get(2).setStudentClass(dataSeeder.getClassrooms().get(0));
+
+		// todo: Liên kết giáo viên với lớp học
+		dataSeeder.getClassrooms().get(1).setTeachers(dataSeeder.getTeachers());
+		dataSeeder.getClassrooms().get(0).setTeachers(List.of(dataSeeder.getTeachers().get(0)));
+
+		classroomRepository.saveAll(dataSeeder.getClassrooms());
+		studentRepository.saveAll(dataSeeder.getStudents());
+
+		/**
+		 * ! Tránh dùng CascadeType.ALL
+		 ** update bảng cha => bảng con sẽ ảnh hưởng
+		 ** => dữ liệu biến đổi ảo diệu
+		 ** => khó kiểm soát
+		 */
+	}
 }

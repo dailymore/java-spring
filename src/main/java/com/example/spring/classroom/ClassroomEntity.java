@@ -65,4 +65,11 @@ public class ClassroomEntity {
 			inverseJoinColumns = @JoinColumn(name = "teacher_id") //
 	)
 	private List<TeacherEntity> teachers = new ArrayList<>();
+
+	/**
+	 * ! Lưu ý:
+	 ** Hibernate không tự động xóa quan hệ n-n nếu xóa bản ghi(ManytoMany)
+	 * ? => xử lý xóa quan hệ bằng tay
+	 ** Nên dùng một bảng trung gian để lưu quan hệ n-n
+	 */
 }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -67,5 +68,12 @@ public class TeacherEntity {
 
 	@ManyToMany(mappedBy = "teachers")
 	private List<ClassroomEntity> classrooms = new ArrayList<>();
+
+	/**
+	 * ! Lưu ý:
+	 ** Hibernate không tự động xóa quan hệ n-n nếu xóa bản ghi(ManytoMany)
+	 * ? => xử lý xóa quan hệ bằng tay
+	 ** Nên dùng một bảng trung gian để lưu quan hệ n-n
+	 */
 
 }
