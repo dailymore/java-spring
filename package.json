@@ -1,0 +1,24 @@
+{
+  "name": "spring-docs",
+  "version": "1.0.0",
+  "description": "cmhehe176 docs for spring",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmhehe176/training-springboot.git"
+  },
+  "author": "cmhehe176",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmhehe176/training-springboot/issues"
+  },
+  "homepage": "https://github.com/cmhehe176/training-springboot#readme",
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}
