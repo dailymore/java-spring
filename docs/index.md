@@ -12,7 +12,7 @@ hero:
       link: /sidebars/java-core/java.md
     - theme: alt
       text: Github Repository
-      link: https://github.com/cmhehe176/training-spring
+      link: https://github.com/cmhehe176/
 
 features:
   - title: Feature A
