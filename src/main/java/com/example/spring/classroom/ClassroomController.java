@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.spring.classroom.dto.request.ClassroomRequestDto;
+import com.example.spring.classroom.dto.response.ClassroomResponseDto;
+
 @RestController
 @RequestMapping("classroom")
 public class ClassroomController {
@@ -15,7 +18,9 @@ public class ClassroomController {
 	private ClassroomService classroomService;
 
 	@GetMapping("/{id}")
-	Optional<ClassroomEntity> getOneClassroom(@PathVariable long id) {
-		return this.classroomService.getOneClassroom(id);
+	Optional<ClassroomResponseDto> getOneClassroom(@PathVariable long id) {
+		ClassroomRequestDto classroomRequestDto = new ClassroomRequestDto(id);
+
+		return this.classroomService.getOneClassroom(classroomRequestDto);
 	}
 }
