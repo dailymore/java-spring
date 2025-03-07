@@ -48,7 +48,7 @@ public class ClassroomEntity {
 
 	@EqualsAndHashCode.Include
 	@Column(nullable = false, length = 20)
-	private String alias;
+	private String code;
 
 	@Column()
 	private String description;
@@ -56,7 +56,7 @@ public class ClassroomEntity {
 	@Column(nullable = false)
 	private int size;
 
-	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<StudentEntity> students = new ArrayList<StudentEntity>();
 
 	@ManyToMany
@@ -65,4 +65,11 @@ public class ClassroomEntity {
 			inverseJoinColumns = @JoinColumn(name = "teacher_id") //
 	)
 	private List<TeacherEntity> teachers = new ArrayList<>();
+
+	/**
+	 * ! Lưu ý:
+	 ** Hibernate không tự động xóa quan hệ n-n nếu xóa bản ghi(ManytoMany)
+	 * ? => xử lý xóa quan hệ bằng tay
+	 ** Nên dùng một bảng trung gian để lưu quan hệ n-n
+	 */
 }

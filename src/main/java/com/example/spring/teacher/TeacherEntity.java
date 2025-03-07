@@ -44,7 +44,7 @@ public class TeacherEntity {
 	private String name;
 
 	@Column()
-	private String college;
+	private String university;
 
 	@Column()
 	private int age;
@@ -53,19 +53,26 @@ public class TeacherEntity {
 	private int experience;
 
 	@Column()
-	private String phoneNumber;
+	private String phone;
 
 	@Column(nullable = false, unique = true)
 	private String email;
 
 	@Column(name = "subject", columnDefinition = "JSON")
 	@Convert(converter = JsonConverter.class)
-	private List<String> subject;
+	private List<String> subjects;
 
 	@Column(nullable = false)
 	private String password;
 
 	@ManyToMany(mappedBy = "teachers")
 	private List<ClassroomEntity> classrooms = new ArrayList<>();
+
+	/**
+	 * ! Lưu ý:
+	 ** Hibernate không tự động xóa quan hệ n-n nếu xóa bản ghi(ManytoMany)
+	 * ? => xử lý xóa quan hệ bằng tay
+	 ** Nên dùng một bảng trung gian để lưu quan hệ n-n
+	 */
 
 }

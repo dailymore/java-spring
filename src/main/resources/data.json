@@ -1,0 +1,71 @@
+{
+  "teachers": [
+    {
+      "id": null,
+      "name": "Nguyễn Văn A",
+      "university": "ĐH Bách Khoa",
+      "age": 40,
+      "experience": 15,
+      "phone": "0123456789",
+      "email": "a@gmail.com",
+      "subjects": ["Math", "Physics"],
+      "password": "1234"
+    },
+    {
+      "id": null,
+      "name": "Trần Thị B",
+      "university": "ĐH Quốc Gia",
+      "age": 35,
+      "experience": 10,
+      "phone": "0987654321",
+      "email": "b@gmail.com",
+      "subjects": ["Programming", "AI"],
+      "password": "1234"
+    }
+  ],
+  "classrooms": [
+    {
+      "id": null,
+      "name": "Class A",
+      "code": "CLS-A",
+      "description": "Lớp học lập trình",
+      "size": 30
+    },
+    {
+      "id": null,
+      "name": "Class B",
+      "code": "CLS-B",
+      "description": "Lớp học toán học",
+      "size": 25
+    }
+  ],
+  "students": [
+    {
+      "id": null,
+      "name": "Lê Hồng Đức",
+      "studentId": "S001",
+      "address": "Hà Nội",
+      "age": 20,
+      "cpa": 3.5,
+      "password": "1234"
+    },
+    {
+      "id": null,
+      "name": "Nguyễn Hoàng Anh",
+      "studentId": "S002",
+      "address": "HCM",
+      "age": 21,
+      "cpa": 3.8,
+      "password": "1234"
+    },
+    {
+      "id": null,
+      "name": "Phạm Văn Cường",
+      "studentId": "S003",
+      "address": "Đà Nẵng",
+      "age": 22,
+      "cpa": 3.2,
+      "password": "1234"
+    }
+  ]
+}
