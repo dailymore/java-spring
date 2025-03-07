@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ClassroomRequestDto {
-	public Long id;
+public class GetDetailClassroomReqDto {
+	Long id;
 }
