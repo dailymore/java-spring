@@ -1,5 +1,5 @@
 import { defineConfig } from "vitepress";
-import formattedSidebars from "../sidebars";
+import sidebars from "../sidebars";
 
 export default defineConfig({
   title: "Spring Docs",
@@ -12,7 +12,7 @@ export default defineConfig({
       { text: "Home", link: "/" },
       // { text: "Guide", link: "/markdown-examples" },
     ],
-    sidebar: formattedSidebars,
+    sidebar: sidebars,
     socialLinks: [
       { icon: "github", link: "https://github.com/cmhehe176/training-spring" },
     ],

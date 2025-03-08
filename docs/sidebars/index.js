@@ -48,9 +48,9 @@ let sidebars = Object.entries(groupedFiles).sort(
     order.indexOf(categoryA) - order.indexOf(categoryB)
 );
 
-const formattedSidebars = sidebars.map(([category, items]) => ({
+sidebars = sidebars.map(([category, items]) => ({
   text: formatFileName(category),
   items,
 }));
 
-export default formattedSidebars;
+export default sidebars;
