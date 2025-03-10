@@ -36,7 +36,7 @@ public class GetDetailClassroomDto extends ClassroomResponseDto {
 						teacher.getUniversity(),
 						teacher.getEmail(),
 						null,
-						null,
+						teacher.getExperience(),
 						teacher.getSubjects()))
 				.collect(Collectors.toList());
 
