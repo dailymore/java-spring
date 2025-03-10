@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 import lombok.Data;
 
 @Data
-public class RelationsValidate {
-	private List<String> relations;
+public class Validate {
 
-	public <E extends Enum<E>> RelationsValidate(List<String> relations, Class<E> enumClass) {
-		this.relations = relations;
+	public static <E extends Enum<E>> void RelationsValidate(List<String> relations, Class<E> enumClass) {
 
 		Set<String> validRelations = Arrays.stream(enumClass.getEnumConstants())
 				.map(e -> {

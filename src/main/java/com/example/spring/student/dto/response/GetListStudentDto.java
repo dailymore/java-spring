@@ -15,6 +15,10 @@ public class GetListStudentDto extends StudentResponseDto {
 	private ClassroomResponseDto classroom;
 	private List<TeacherResponseDto> teacher;
 
+	public GetListStudentDto(StudentEntity studentEntity) {
+		this(studentEntity, List.of());
+	}
+
 	public GetListStudentDto(StudentEntity studentEntity, List<String> relations) {
 		super(studentEntity);
 
@@ -28,7 +32,6 @@ public class GetListStudentDto extends StudentResponseDto {
 					.stream()
 					.map(TeacherResponseDto::new)
 					.collect(Collectors.toList());
-
 	}
 
 }

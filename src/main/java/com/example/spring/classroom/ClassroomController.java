@@ -23,15 +23,13 @@ public class ClassroomController {
 
 	@GetMapping("/{id}")
 	Optional<GetDetailClassroomDto> getDetailClassroom(@PathVariable Long id) {
-		GetDetailClassroomReqDto classroomRequestDto = new GetDetailClassroomReqDto(id);
 
-		return this.classroomService.getDetailClassroom(classroomRequestDto.getId());
+		return this.classroomService.getDetailClassroom(new GetDetailClassroomReqDto(id).getId());
 	}
 
 	@GetMapping()
-	List<GetListClassroomDto> getListClassroom(@RequestParam(required = false) List<String> relations) {
-		GetListClassroomReqDto classroomRequestDto = new GetListClassroomReqDto(relations);
+	List<GetListClassroomDto> getListClassroom(@RequestParam(defaultValue = "") List<String> relations) {
 
-		return this.classroomService.getListClassroom(classroomRequestDto.getRelations());
+		return this.classroomService.getListClassroom(new GetListClassroomReqDto(relations).getRelations());
 	}
 }
