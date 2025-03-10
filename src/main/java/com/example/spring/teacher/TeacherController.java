@@ -26,7 +26,7 @@ public class TeacherController {
 	}
 
 	@GetMapping()
-	List<GetListTeacherDto> getListTeacher(@RequestParam(defaultValue = "") List<String> relations){
+	List<GetListTeacherDto> getListTeacher(@RequestParam(defaultValue = "") List<String> relations) {
 		return this.teacherService.getListTeacher(relations);
 	}
 }
