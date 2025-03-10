@@ -14,7 +14,8 @@ public enum ClassroomRelationEnum {
 	private final String value;
 
 	public static boolean includes(String value) {
-		return Arrays.stream(ClassroomRelationEnum.values())
+		return Arrays
+				.stream(ClassroomRelationEnum.values())
 				.anyMatch(e -> e.name().equalsIgnoreCase(value));
 	}
 }
