@@ -3,20 +3,23 @@ package com.example.spring.utils.dto.response;
 import java.util.List;
 
 import com.example.spring.teacher.TeacherEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeacherResponseDto {
-	private Long id;
-	private int age;
-	private String name;
-	private String university;
-	private String email;
-	private String phone;
-	private int experience;
-	private List<String> subject;
-	// private List<ClassroomResponseDto> classrooms;
+	protected Long id;
+	protected Integer age;
+	protected String name;
+	protected String university;
+	protected String email;
+	protected String phone;
+	protected Integer experience;
+	protected List<String> subject;
 
 	public TeacherResponseDto(TeacherEntity teacherEntity) {
 		this.id = teacherEntity.getId();
@@ -27,11 +30,5 @@ public class TeacherResponseDto {
 		this.phone = teacherEntity.getPhone();
 		this.experience = teacherEntity.getExperience();
 		this.subject = teacherEntity.getSubjects();
-
-		// System.out.println(teacherEntity.getClassrooms());
-
-		// .map(teacher -> new TeacherResponseDto(teacher))
-		// .collect(Collectors.toList());
-		;
 	}
 }
