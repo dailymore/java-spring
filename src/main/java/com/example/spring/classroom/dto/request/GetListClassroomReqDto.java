@@ -2,18 +2,14 @@ package com.example.spring.classroom.dto.request;
 
 import java.util.List;
 
-import com.example.spring.utils.dto.Validate;
+import com.example.spring.utils.dto.ValidateRelationDto;
 import com.example.spring.utils.dto.request.ClassroomRelationEnum;
 
-import lombok.Data;
-
-@Data
-public class GetListClassroomReqDto {
-	private List<String> relations;
+public class GetListClassroomReqDto extends ValidateRelationDto {
 
 	public GetListClassroomReqDto(List<String> relations) {
-		Validate.RelationsValidate(relations, ClassroomRelationEnum.class);
+		super(relations);
 
-		this.relations = relations;
+		this.validate(ClassroomRelationEnum.class);
 	}
 }

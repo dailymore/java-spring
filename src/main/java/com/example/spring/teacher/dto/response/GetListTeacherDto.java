@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.spring.teacher.TeacherEntity;
+import com.example.spring.utils.dto.request.TeacherRelationEnum;
 import com.example.spring.utils.dto.response.ClassroomResponseDto;
 import com.example.spring.utils.dto.response.StudentResponseDto;
 import com.example.spring.utils.dto.response.TeacherResponseDto;
@@ -18,13 +19,13 @@ public class GetListTeacherDto extends TeacherResponseDto {
 	public GetListTeacherDto(TeacherEntity teacherEntity, List<String> relations) {
 		super(teacherEntity);
 
-		if (relations.contains("classroom"))
+		if (relations.contains(TeacherRelationEnum.CLASSROOM.getValue()))
 			this.classrooms = teacherEntity.getClassrooms()
 					.stream()
 					.map(ClassroomResponseDto::new)
 					.collect(Collectors.toList());
 
-		if (relations.contains("student"))
+		if (relations.contains(TeacherRelationEnum.STUDENT.getValue()))
 			this.students = teacherEntity
 					.getClassrooms()
 					.stream()
