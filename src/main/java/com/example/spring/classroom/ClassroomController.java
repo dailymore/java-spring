@@ -30,7 +30,6 @@ public class ClassroomController {
 
 	@GetMapping()
 	List<GetListClassroomDto> getListClassroom(@RequestParam(required = false) List<String> relations) {
-
 		GetListClassroomReqDto classroomRequestDto = new GetListClassroomReqDto(relations);
 
 		return this.classroomService.getListClassroom(classroomRequestDto.getRelations());
