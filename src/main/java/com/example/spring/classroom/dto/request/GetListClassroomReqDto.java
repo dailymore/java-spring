@@ -2,8 +2,8 @@ package com.example.spring.classroom.dto.request;
 
 import java.util.List;
 
+import com.example.spring.utils.dto.Validate;
 import com.example.spring.utils.dto.request.ClassroomRelationEnum;
-import com.example.spring.utils.dto.request.Validate;
 
 import lombok.Data;
 

@@ -1,13 +1,10 @@
-package com.example.spring.utils.dto.request;
+package com.example.spring.utils.dto;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import lombok.Data;
-
-@Data
 public class Validate {
 
 	public static <E extends Enum<E>> void RelationsValidate(List<String> relations, Class<E> enumClass) {
