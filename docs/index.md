@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Documents
-      link: /sidebars/java-core/java.md
+      link: /sidebars/theory/java.md
     - theme: alt
       text: Github Repository
       link: https://github.com/cmhehe176/
