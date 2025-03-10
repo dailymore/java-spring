@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.spring.teacher.dto.request.GetListTeacherReqDto;
 import com.example.spring.teacher.dto.response.GetListTeacherDto;
 import com.example.spring.teacher.dto.response.GetTeacherDetailDto;
 
@@ -27,6 +28,6 @@ public class TeacherController {
 
 	@GetMapping()
 	List<GetListTeacherDto> getListTeacher(@RequestParam(defaultValue = "") List<String> relations) {
-		return this.teacherService.getListTeacher(relations);
+		return this.teacherService.getListTeacher(new GetListTeacherReqDto(relations).getRelations());
 	}
 }
