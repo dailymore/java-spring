@@ -1,11 +1,9 @@
 package com.example.spring.classroom.dto.request;
 
-import lombok.Setter;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class GetDetailClassroomReqDto {
 	Long id;

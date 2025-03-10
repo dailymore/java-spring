@@ -46,5 +46,4 @@ public class GetDetailClassroomDto extends ClassroomResponseDto {
 				.map(StudentResponseDto::new)
 				.collect(Collectors.toList());
 	}
-
 }
