@@ -16,7 +16,7 @@ import com.example.spring.student.StudentEntity;
 import com.example.spring.student.repository.StudentRepository;
 import com.example.spring.teacher.TeacherEntity;
 import com.example.spring.teacher.repository.TeacherRepository;
-import com.example.spring.utils.ArgonHash;
+import com.example.spring.utils.security.ArgonHash;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;

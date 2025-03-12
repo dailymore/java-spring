@@ -1,9 +1,9 @@
-package com.example.spring.utils;
+package com.example.spring.utils.security;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 
-public class ArgonHash {
+public final class ArgonHash {
 	private static final Argon2 argon2 = Argon2Factory.create();
 
 	public static String hash(char[] password) {

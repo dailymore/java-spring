@@ -68,7 +68,7 @@ public class ClassroomEntity {
 
 	/**
 	 * ! Lưu ý:
-	 ** Hibernate không tự động xóa quan hệ n-n nếu xóa bản ghi(ManytoMany)
+	 ** Hibernate không tự động xóa quan hệ n-n nếu xóa bản ghi (ManytoMany)
 	 * ? => xử lý xóa quan hệ bằng tay
 	 ** Nên dùng một bảng trung gian để lưu quan hệ n-n
 	 */
