@@ -1,22 +1,38 @@
 package com.example.spring.utils.security;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
-public final class JwtToken {
-	private final String SECRET_KEY = "hehe";
-	private final long EXPIRATION_TIME = 86400000; // 1 ngày
-	private final ObjectMapper objectMapper = new ObjectMapper();
+@Component
+public class JwtToken {
+	private final Key SECRET_KEY;
+	private final long EXPIRATION_TIME; // 1 ngày
+	private final ObjectMapper objectMapper;
 
-	public final <T> String generateToken(T instance) {
+	public JwtToken() {
+		this.objectMapper = new ObjectMapper();
+		this.EXPIRATION_TIME = 86400000;
+		this.SECRET_KEY = Keys.hmacShaKeyFor("mySuperSecretKeyThatIsLongEnoughForHS256".getBytes());
+	}
 
-		 Jwts.builder().subject(SECRET_KEY);
-		//  https://github.com/jwtk/jjwt
-		return "hello";
+	public final <T> String generateToken(T instance) throws JsonProcessingException {
+
+		String jwt = Jwts.builder()
+				.subject("authentication")
+				.claim(instance.getClass().getSimpleName(), instance)
+				.signWith(SECRET_KEY)
+				.compact();
+
+		return jwt;
 	}
 
 	public final String verifyToken(String Token) {
