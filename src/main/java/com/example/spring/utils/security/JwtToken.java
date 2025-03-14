@@ -1,6 +1,5 @@
 package com.example.spring.utils.security;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +9,7 @@ import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
 
 import com.example.spring.utils.dto.response.StudentDto;
+import com.example.spring.utils.dto.response.TeacherDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,21 +21,17 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtToken {
 	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("mySuperSecretKeyThatIsLongEnoughForHS256".getBytes());
-	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L;// 1 ngày
-	private final ObjectMapper objectMapper;
+	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L; // 1 ngày
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	private final Map<String, Class<?>> mapClass = new HashMap<String, Class<?>>() {
 		{
-			put("StudentResponseDto", StudentDto.class);
+			put(StudentDto.class.getSimpleName(), StudentDto.class);
+			put(TeacherDto.class.getSimpleName(), TeacherDto.class);
 		}
 	};
 
-	public JwtToken() {
-		this.objectMapper = new ObjectMapper();
-	}
-
 	public <T> Map<String, String> generateToken(T instance) throws JsonProcessingException {
-
 		String jwt = Jwts.builder()
 				.subject(instance.getClass().getSimpleName())
 				.claim("instance", instance)
@@ -48,7 +44,6 @@ public class JwtToken {
 	}
 
 	public Object verifyToken(String Token) {
-
 		try {
 			Map<String, Object> claims = Jwts.parser()
 					.verifyWith(SECRET_KEY)

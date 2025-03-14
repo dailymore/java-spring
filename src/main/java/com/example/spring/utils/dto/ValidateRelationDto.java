@@ -11,8 +11,9 @@ import lombok.Getter;
 public class ValidateRelationDto {
 	private List<String> relations;
 
-	public ValidateRelationDto(List<String> relations) {
+	public <E extends Enum<E>> ValidateRelationDto(List<String> relations, Class<E> className) {
 		this.relations = relations;
+		this.validate(className);
 	}
 
 	public <E extends Enum<E>> void validate(Class<E> enumClass) {

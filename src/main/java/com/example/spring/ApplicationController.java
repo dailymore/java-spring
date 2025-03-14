@@ -13,8 +13,6 @@ import com.example.spring.utils.dto.response.StudentDto;
 import com.example.spring.utils.security.JwtToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import io.jsonwebtoken.Claims;
-
 @RestController
 @RequestMapping("public")
 public class ApplicationController {

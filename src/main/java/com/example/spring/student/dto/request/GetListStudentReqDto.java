@@ -8,8 +8,6 @@ import com.example.spring.utils.dto.request.StudentRelationEnum;
 public class GetListStudentReqDto extends ValidateRelationDto {
 
 	public GetListStudentReqDto(List<String> relations) {
-		super(relations);
-
-		this.validate(StudentRelationEnum.class);
+		super(relations, StudentRelationEnum.class);
 	}
 }
