@@ -5,18 +5,18 @@ import java.util.stream.Collectors;
 
 import com.example.spring.classroom.ClassroomEntity;
 import com.example.spring.utils.dto.request.ClassroomRelationEnum;
-import com.example.spring.utils.dto.response.ClassroomResponseDto;
-import com.example.spring.utils.dto.response.StudentResponseDto;
-import com.example.spring.utils.dto.response.TeacherResponseDto;
+import com.example.spring.utils.dto.response.ClassroomDto;
+import com.example.spring.utils.dto.response.StudentDto;
+import com.example.spring.utils.dto.response.TeacherDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Getter;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GetListClassroomDto extends ClassroomResponseDto {
-	List<TeacherResponseDto> teachers;
-	List<StudentResponseDto> students;
+public class GetListClassroomDto extends ClassroomDto {
+	List<TeacherDto> teachers;
+	List<StudentDto> students;
 
 	public GetListClassroomDto(ClassroomEntity classroomEntity) {
 		this(classroomEntity, List.of());
@@ -29,14 +29,14 @@ public class GetListClassroomDto extends ClassroomResponseDto {
 			this.teachers = classroomEntity
 					.getTeachers()
 					.stream()
-					.map(TeacherResponseDto::new)
+					.map(TeacherDto::new)
 					.collect(Collectors.toList());
 
 		if (relations.contains(ClassroomRelationEnum.STUDENT.getValue()))
 			this.students = classroomEntity
 					.getStudents()
 					.stream()
-					.map(StudentResponseDto::new)
+					.map(StudentDto::new)
 					.collect(Collectors.toList());
 	}
 }

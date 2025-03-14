@@ -4,18 +4,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.spring.classroom.ClassroomEntity;
-import com.example.spring.utils.dto.response.ClassroomResponseDto;
-import com.example.spring.utils.dto.response.StudentResponseDto;
-import com.example.spring.utils.dto.response.TeacherResponseDto;
+import com.example.spring.utils.dto.response.ClassroomDto;
+import com.example.spring.utils.dto.response.StudentDto;
+import com.example.spring.utils.dto.response.TeacherDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Getter;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GetDetailClassroomDto extends ClassroomResponseDto {
-	List<TeacherResponseDto> teachers;
-	List<StudentResponseDto> students;
+public class GetDetailClassroomDto extends ClassroomDto {
+	List<TeacherDto> teachers;
+	List<StudentDto> students;
 
 	/*
 	 * Viết các trường nguyên thủy ở trong utils để dùng chung
@@ -29,7 +29,7 @@ public class GetDetailClassroomDto extends ClassroomResponseDto {
 		this.teachers = classroomEntity
 				.getTeachers()
 				.stream()
-				.map(teacher -> new TeacherResponseDto(
+				.map(teacher -> new TeacherDto(
 						teacher.getId(),
 						teacher.getAge(),
 						teacher.getName(),
@@ -43,7 +43,7 @@ public class GetDetailClassroomDto extends ClassroomResponseDto {
 		this.students = classroomEntity
 				.getStudents()
 				.stream()
-				.map(StudentResponseDto::new)
+				.map(StudentDto::new)
 				.collect(Collectors.toList());
 	}
 }

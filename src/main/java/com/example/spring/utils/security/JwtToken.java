@@ -1,41 +1,44 @@
 package com.example.spring.utils.security;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.security.Key;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.stereotype.Component;
 
+import com.example.spring.utils.dto.response.StudentDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtToken {
-	private final Key SECRET_KEY = Keys.hmacShaKeyFor("mySuperSecretKeyThatIsLongEnoughForHS256".getBytes());
-	private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
+	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("mySuperSecretKeyThatIsLongEnoughForHS256".getBytes());
+	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L;// 1 ngày
 	private final ObjectMapper objectMapper;
+
+	private final Map<String, Class<?>> mapClass = new HashMap<String, Class<?>>() {
+		{
+			put("StudentResponseDto", StudentDto.class);
+		}
+	};
 
 	public JwtToken() {
 		this.objectMapper = new ObjectMapper();
 	}
 
-	public final <T> Map<String, String> generateToken(T instance) throws JsonProcessingException {
-		// Chuyển đổi object thành Map<String, Object> bằng ObjectMapper
-		Map<String, Object> claimsMap = objectMapper.convertValue(instance, new TypeReference<Map<String, Object>>() {
-		});
-		// ? new TypeReference<Map<String, Object>>() {} = Map.class
+	public <T> Map<String, String> generateToken(T instance) throws JsonProcessingException {
 
 		String jwt = Jwts.builder()
 				.subject(instance.getClass().getSimpleName())
-				.claims(claimsMap)
+				.claim("instance", instance)
 				.issuedAt(new Date())
 				.expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(SECRET_KEY)
@@ -44,8 +47,27 @@ public class JwtToken {
 		return Map.of("accessToken", jwt);
 	}
 
-	public final String verifyToken(String Token) {
+	public Object verifyToken(String Token) {
 
-		return "hello";
+		try {
+			Map<String, Object> claims = Jwts.parser()
+					.verifyWith(SECRET_KEY)
+					.build()
+					.parseSignedClaims(Token)
+					.getPayload();
+
+			String className = (String) claims.get("sub");
+
+			return objectMapper.convertValue(claims.get("instance"), mapClass.get(className));
+
+		} catch (ExpiredJwtException e) {
+			System.out.println("Token đã hết hạn!");
+
+			return false;
+		} catch (JwtException e) {
+			System.out.println("Token không hợp lệ!");
+
+			return false;
+		}
 	}
 }

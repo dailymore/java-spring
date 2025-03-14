@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class StudentResponseDto {
+public class StudentDto {
 	protected Long id;
 	protected Integer age;
 	protected String name;
@@ -17,7 +19,7 @@ public class StudentResponseDto {
 	protected String address;
 	protected Float cpa;
 
-	public StudentResponseDto(StudentEntity studentEntity) {
+	public StudentDto(StudentEntity studentEntity) {
 		this.id = studentEntity.getId();
 		this.age = studentEntity.getAge();
 		this.name = studentEntity.getName();

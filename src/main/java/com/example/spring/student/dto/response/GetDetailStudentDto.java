@@ -4,24 +4,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.spring.student.StudentEntity;
-import com.example.spring.utils.dto.response.ClassroomResponseDto;
-import com.example.spring.utils.dto.response.StudentResponseDto;
-import com.example.spring.utils.dto.response.TeacherResponseDto;
+import com.example.spring.utils.dto.response.ClassroomDto;
+import com.example.spring.utils.dto.response.StudentDto;
+import com.example.spring.utils.dto.response.TeacherDto;
 
 import lombok.Getter;
 
 @Getter
-public class GetDetailStudentDto extends StudentResponseDto {
-	private ClassroomResponseDto classroom;
-	private List<TeacherResponseDto> teacher;
+public class GetDetailStudentDto extends StudentDto {
+	private ClassroomDto classroom;
+	private List<TeacherDto> teacher;
 
 	public GetDetailStudentDto(StudentEntity studentEntity) {
 		super(studentEntity);
 
-		this.classroom = new ClassroomResponseDto(studentEntity.getStudentClass());
+		this.classroom = new ClassroomDto(studentEntity.getStudentClass());
 		this.teacher = studentEntity.getStudentClass().getTeachers()
 				.stream()
-				.map(TeacherResponseDto::new)
+				.map(TeacherDto::new)
 				.collect(Collectors.toList());
 	}
 

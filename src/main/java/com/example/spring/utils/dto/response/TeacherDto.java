@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TeacherResponseDto {
+public class TeacherDto {
 	protected Long id;
 	protected Integer age;
 	protected String name;
@@ -21,7 +21,7 @@ public class TeacherResponseDto {
 	protected Integer experience;
 	protected List<String> subject;
 
-	public TeacherResponseDto(TeacherEntity teacherEntity) {
+	public TeacherDto(TeacherEntity teacherEntity) {
 		this.id = teacherEntity.getId();
 		this.age = teacherEntity.getAge();
 		this.name = teacherEntity.getName();

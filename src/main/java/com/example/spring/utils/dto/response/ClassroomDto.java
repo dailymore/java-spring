@@ -11,7 +11,7 @@ import lombok.Getter;
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClassroomResponseDto {
+public class ClassroomDto {
 	// * Nên khai báo Wrapper class cho các kiểu dữ liệu trong Dto
 	protected Long id;
 	protected String name;
@@ -19,7 +19,7 @@ public class ClassroomResponseDto {
 	protected String description;
 	protected Integer size;
 
-	public ClassroomResponseDto(ClassroomEntity classroomEntity) {
+	public ClassroomDto(ClassroomEntity classroomEntity) {
 		this.id = classroomEntity.getId();
 		this.name = classroomEntity.getName();
 		this.code = classroomEntity.getCode();

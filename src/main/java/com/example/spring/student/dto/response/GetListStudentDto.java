@@ -5,16 +5,16 @@ import java.util.stream.Collectors;
 
 import com.example.spring.student.StudentEntity;
 import com.example.spring.utils.dto.request.StudentRelationEnum;
-import com.example.spring.utils.dto.response.ClassroomResponseDto;
-import com.example.spring.utils.dto.response.StudentResponseDto;
-import com.example.spring.utils.dto.response.TeacherResponseDto;
+import com.example.spring.utils.dto.response.ClassroomDto;
+import com.example.spring.utils.dto.response.StudentDto;
+import com.example.spring.utils.dto.response.TeacherDto;
 
 import lombok.Getter;
 
 @Getter
-public class GetListStudentDto extends StudentResponseDto {
-	private ClassroomResponseDto classroom;
-	private List<TeacherResponseDto> teacher;
+public class GetListStudentDto extends StudentDto {
+	private ClassroomDto classroom;
+	private List<TeacherDto> teacher;
 
 	public GetListStudentDto(StudentEntity studentEntity) {
 		this(studentEntity, List.of());
@@ -24,14 +24,14 @@ public class GetListStudentDto extends StudentResponseDto {
 		super(studentEntity);
 
 		if (relations.contains(StudentRelationEnum.CLASSROOM.getValue()))
-			this.classroom = new ClassroomResponseDto(studentEntity.getStudentClass());
+			this.classroom = new ClassroomDto(studentEntity.getStudentClass());
 
 		if (relations.contains(StudentRelationEnum.TEACHER.getValue()))
 			this.teacher = studentEntity
 					.getStudentClass()
 					.getTeachers()
 					.stream()
-					.map(TeacherResponseDto::new)
+					.map(TeacherDto::new)
 					.collect(Collectors.toList());
 	}
 
