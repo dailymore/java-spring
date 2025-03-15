@@ -1,48 +1,37 @@
-// package com.example.spring.auth;
+package com.example.spring.auth;
 
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import
-// org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-// import
-// org.springframework.security.config.annotation.web.builders.HttpSecurity;
-// import
-// org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-// import org.springframework.security.core.userdetails.User;
-// import org.springframework.security.core.userdetails.UserDetails;
-// import org.springframework.security.core.userdetails.UserDetailsService;
-// import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-// import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-// @Configuration
-// @EnableWebSecurity
-// @EnableMethodSecurity
-// public class SecurityConfig {
+import com.example.spring.utils.security.JwtTokenService;
 
-// @Bean
-// public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-// Exception {
-// http
-// .authorizeHttpRequests(auth -> auth
-// .requestMatchers("/public").permitAll() // Cho phép truy cập không cần xác
-// thực
-// // .anyRequest().authenticated() // Các request khác yêu cầu đăng nhập
-// )
-// .formLogin() // Sử dụng form đăng nhập mặc định
-// .and()
-// .logout(); // Hỗ trợ logout
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
 
-// return http.build();
-// }
+	@Autowired
+	private JwtTokenService jwtTokenService;
 
-// @Bean
-// public UserDetailsService userDetailsService() {
-// UserDetails user = User.withDefaultPasswordEncoder()
-// .username("admin")
-// .password("123456")
-// .roles("USER")
-// .build();
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-// return new InMemoryUserDetailsManager(user);
-// }
-// }
+		http.csrf(csrf -> csrf.disable()) // Tắt CSRF => không dùng session
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/public").permitAll()
+						.anyRequest().authenticated() // Các request khác cần JWT
+				)
+				.addFilterBefore(new JwtAuthenticationFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
+
+		return http.build();
+	}
+
+}

@@ -6,20 +6,21 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.example.spring.utils.dto.response.StudentDto;
 import com.example.spring.utils.dto.response.TeacherDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
-@Component
-public class JwtToken {
+@Service
+public class JwtTokenService {
 	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("mySuperSecretKeyThatIsLongEnoughForHS256".getBytes());
 	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L; // 1 ngày
 	private final ObjectMapper objectMapper = new ObjectMapper();
@@ -43,24 +44,35 @@ public class JwtToken {
 		return Map.of("accessToken", jwt);
 	}
 
-	public Object verifyToken(String Token) {
+	public Object verifyToken(String authToken) {
+		/**
+		 * todo: Ở đây nếu tạo thêm một StringBuffer cũng sẽ tốn 2 ô nhớ tương tự String
+		 * ? => dùng String cũng oce
+		 */
+
+		StringBuilder jwtToken = new StringBuilder();
+
+		if (authToken.split(" ").length == 2)
+			jwtToken.append(authToken.split(" ")[1]);
+		else
+			jwtToken.append(authToken);
+
 		try {
-			Map<String, Object> claims = Jwts.parser()
+			Claims claims = Jwts.parser()
 					.verifyWith(SECRET_KEY)
 					.build()
-					.parseSignedClaims(Token)
+					.parseSignedClaims(jwtToken)
 					.getPayload();
 
-			String className = (String) claims.get("sub");
+			String className = claims.getSubject();
 
 			return objectMapper.convertValue(claims.get("instance"), mapClass.get(className));
-
 		} catch (ExpiredJwtException e) {
-			System.out.println("Token đã hết hạn!");
+			System.out.println("Token đã hết hạn!\n" + e);
 
 			return false;
 		} catch (JwtException e) {
-			System.out.println("Token không hợp lệ!");
+			System.out.println("Token không hợp lệ!\n" + e);
 
 			return false;
 		}
