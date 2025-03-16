@@ -29,9 +29,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		// * Decode để tránh trường hợp bị mã hoá dấu cách thành %20 sẽ không split được
-		String authHeader = URLDecoder.decode(request.getHeader("Authorization"), StandardCharsets.UTF_8);
+		// String authHeader = URLDecoder.decode(request.getHeader("Authorization"),
+		// StandardCharsets.UTF_8);
 
-		jwtTokenService.verifyToken(authHeader);
+		// jwtTokenService.verifyToken(authHeader);
+
+		System.out.println("heello");
 
 		filterChain.doFilter(request, response);
 	}

@@ -25,10 +25,7 @@ public class SecurityConfig {
 
 		http.csrf(csrf -> csrf.disable()) // Tắt CSRF => không dùng session
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/public").permitAll()
-						.anyRequest().authenticated() // Các request khác cần JWT
-				)
+				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.addFilterBefore(new JwtAuthenticationFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
