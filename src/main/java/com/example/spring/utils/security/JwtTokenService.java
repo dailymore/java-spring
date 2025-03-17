@@ -23,7 +23,6 @@ import io.jsonwebtoken.security.Keys;
 
 import org.springframework.security.oauth2.jwt.Jwt;
 
-
 import org.springframework.security.core.userdetails.User;
 
 @Service
