@@ -23,6 +23,9 @@ import io.jsonwebtoken.security.Keys;
 
 import org.springframework.security.oauth2.jwt.Jwt;
 
+
+import org.springframework.security.core.userdetails.User;
+
 @Service
 public class JwtTokenService {
 	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("thisIsMySuperSecretKeyWithAtLeast32Bytes!".getBytes());
@@ -58,12 +61,16 @@ public class JwtTokenService {
 			Claims claims = parsedJwt.getPayload();
 			JwsHeader headers = parsedJwt.getHeader();
 
-			return Jwt.withTokenValue(jwtToken)
+			Jwt jwt = Jwt.withTokenValue(jwtToken)
 					.headers(h -> h.putAll(headers))
 					.claims(c -> c.putAll(claims))
 					.issuedAt(claims.getIssuedAt().toInstant())
 					.expiresAt(claims.getExpiration().toInstant())
 					.build();
+
+			addAuthorizationToken(jwt);
+
+			return jwt;
 		} catch (ExpiredJwtException e) {
 			System.out.println("Token đã hết hạn!\n" + e);
 
@@ -75,10 +82,10 @@ public class JwtTokenService {
 		}
 	}
 
-	public Object authorizationToken(Jwt claimsJwt) throws Error {
-		String className = claimsJwt.getSubject();
-		Map<String, Object> claims = claimsJwt.getClaims();
+	public void addAuthorizationToken(Jwt jwtToken) throws Error {
+		Map<String, Object> claims = jwtToken.getClaims();
 
-		return objectMapper.convertValue(claims.get("instance"), mapClass.get(className));
+		Object instance = objectMapper.convertValue(claims.get("instance"), mapClass.get(jwtToken.getSubject()));
+		System.out.println(instance);
 	}
 }

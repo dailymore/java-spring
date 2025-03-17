@@ -17,7 +17,6 @@ import com.example.spring.utils.security.JwtTokenService;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
 	@Autowired
 	private JwtTokenService jwtTokenService;
 

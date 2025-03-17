@@ -2,17 +2,27 @@ package com.example.spring.auth;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.example.spring.utils.security.JwtTokenService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * ! Mặc định:
+ * * khi có SecurityConfig, middleware custom luôn đi sau securityConfig
+ */
 @Component
-public class FilterExample extends OncePerRequestFilter {
+public class AuthorizationFilter extends OncePerRequestFilter {
+
+	@Autowired
+	private JwtTokenService jwtTokenService;
 
 	@Override
 	protected void doFilterInternal(
@@ -20,10 +30,6 @@ public class FilterExample extends OncePerRequestFilter {
 			@NonNull HttpServletResponse response,
 			@NonNull FilterChain filterChain)
 			throws ServletException, IOException {
-
-		// * Decode để tránh trường hợp bị mã hoá thành %20 sẽ không split được
-		// String authHeader = URLDecoder.decode(request.getHeader("Authorization"),
-		// StandardCharsets.UTF_8);
 
 		// jwtTokenService.verifyToken(authHeader);
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,10 @@ public class TeacherController {
 
 	@GetMapping()
 	List<GetListTeacherDto> getListTeacher(@RequestParam(defaultValue = "") List<String> relations) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		System.out.println(authentication);
+
 		return this.teacherService.getListTeacher(new GetListTeacherReqDto(relations).getRelations());
 	}
 }
