@@ -15,13 +15,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+import org.springframework.security.oauth2.jwt.Jwt;
+
 @Service
 public class JwtTokenService {
-	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("mySuperSecretKeyThatIsLongEnoughForHS256".getBytes());
+	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("thisIsMySuperSecretKeyWithAtLeast32Bytes!".getBytes());
 	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L; // 1 ngày
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -44,37 +48,37 @@ public class JwtTokenService {
 		return Map.of("accessToken", jwt);
 	}
 
-	public Object verifyToken(String authToken) {
-		/**
-		 * todo: Ở đây nếu tạo thêm một StringBuffer cũng sẽ tốn 2 ô nhớ tương tự String
-		 * ? => dùng String cũng oce
-		 */
-
-		StringBuilder jwtToken = new StringBuilder();
-
-		if (authToken.split(" ").length == 2)
-			jwtToken.append(authToken.split(" ")[1]);
-		else
-			jwtToken.append(authToken);
-
+	public Jwt decode(String jwtToken) {
 		try {
-			Claims claims = Jwts.parser()
+			Jws<Claims> parsedJwt = Jwts.parser()
 					.verifyWith(SECRET_KEY)
 					.build()
-					.parseSignedClaims(jwtToken)
-					.getPayload();
+					.parseSignedClaims(jwtToken);
 
-			String className = claims.getSubject();
+			Claims claims = parsedJwt.getPayload();
+			JwsHeader headers = parsedJwt.getHeader();
 
-			return objectMapper.convertValue(claims.get("instance"), mapClass.get(className));
+			return Jwt.withTokenValue(jwtToken)
+					.headers(h -> h.putAll(headers))
+					.claims(c -> c.putAll(claims))
+					.issuedAt(claims.getIssuedAt().toInstant())
+					.expiresAt(claims.getExpiration().toInstant())
+					.build();
 		} catch (ExpiredJwtException e) {
 			System.out.println("Token đã hết hạn!\n" + e);
 
-			return false;
+			return null;
 		} catch (JwtException e) {
 			System.out.println("Token không hợp lệ!\n" + e);
 
-			return false;
+			return null;
 		}
+	}
+
+	public Object authorizationToken(Jwt claimsJwt) throws Error {
+		String className = claimsJwt.getSubject();
+		Map<String, Object> claims = claimsJwt.getClaims();
+
+		return objectMapper.convertValue(claims.get("instance"), mapClass.get(className));
 	}
 }

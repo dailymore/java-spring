@@ -1,25 +1,18 @@
 package com.example.spring.auth;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.example.spring.utils.security.JwtTokenService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	private JwtTokenService jwtTokenService;
-
-	public JwtAuthenticationFilter(JwtTokenService jwtTokenService) {
-		this.jwtTokenService = jwtTokenService;
-	}
+@Component
+public class FilterExample extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(
@@ -28,13 +21,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			@NonNull FilterChain filterChain)
 			throws ServletException, IOException {
 
-		// * Decode để tránh trường hợp bị mã hoá dấu cách thành %20 sẽ không split được
+		// * Decode để tránh trường hợp bị mã hoá thành %20 sẽ không split được
 		// String authHeader = URLDecoder.decode(request.getHeader("Authorization"),
 		// StandardCharsets.UTF_8);
 
 		// jwtTokenService.verifyToken(authHeader);
 
-		System.out.println("heello");
+		System.out.println("heello2222");
 
 		filterChain.doFilter(request, response);
 	}
