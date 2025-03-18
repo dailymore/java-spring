@@ -1,6 +1,6 @@
 package com.example.spring.utils;
 
-public class AppConfig {
+public class AppConstant {
 	public static final String[] publicRoutes = {
 			"/public/**",
 			"/login",

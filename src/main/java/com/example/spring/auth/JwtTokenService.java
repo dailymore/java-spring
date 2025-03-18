@@ -7,8 +7,6 @@ import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -27,7 +25,7 @@ public class JwtTokenService {
 	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("thisIsMySuperSecretKeyWithAtLeast32Bytes!".getBytes());
 	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L; // 1 ngày
 
-	public <T> Map<String, String> generateToken(T instance) throws JsonProcessingException {
+	public <T> Map<String, String> generateToken(T instance) {
 		String jwt = Jwts.builder()
 				.subject(instance.getClass().getSimpleName())
 				.claim("instance", instance)

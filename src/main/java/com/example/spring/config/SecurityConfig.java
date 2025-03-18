@@ -1,6 +1,6 @@
 package com.example.spring.config;
 
-import static com.example.spring.utils.AppConfig.publicRoutes;
+import static com.example.spring.utils.AppConstant.publicRoutes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
