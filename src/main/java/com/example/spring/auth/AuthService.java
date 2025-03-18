@@ -29,6 +29,7 @@ public class AuthService {
 
 			if (student.isEmpty())
 				throw new Error();
+
 			verify(student.get().getPassword(), password.toCharArray());
 			student.get().setPassword(null);
 
@@ -40,6 +41,7 @@ public class AuthService {
 
 			if (teacher.isEmpty())
 				throw new Error();
+
 			verify(teacher.get().getPassword(), password.toCharArray());
 			teacher.get().setPassword(null);
 

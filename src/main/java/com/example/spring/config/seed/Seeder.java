@@ -1,5 +1,7 @@
 package com.example.spring.config.seed;
 
+import static com.example.spring.utils.security.ArgonHash.hash;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -16,7 +18,6 @@ import com.example.spring.student.StudentEntity;
 import com.example.spring.student.repository.StudentRepository;
 import com.example.spring.teacher.TeacherEntity;
 import com.example.spring.teacher.repository.TeacherRepository;
-import com.example.spring.utils.security.ArgonHash;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,7 +50,7 @@ public class Seeder implements CommandLineRunner {
 	private StudentRepository studentRepository;
 
 	public Seeder() throws StreamReadException, DatabindException, IOException {
-		this.password = ArgonHash.hash("1234".toCharArray());
+		this.password = hash("1234".toCharArray());
 		this.objectMapper = new ObjectMapper();
 		this.inputStream = new ClassPathResource("data.json").getInputStream();
 		this.dataSeeder = this.objectMapper.readValue(inputStream, DataSeeder.class);
