@@ -1,17 +1,13 @@
-package com.example.spring.utils.security;
+package com.example.spring.auth;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Service;
 
-import com.example.spring.utils.dto.response.StudentDto;
-import com.example.spring.utils.dto.response.TeacherDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -22,21 +18,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 import org.springframework.security.oauth2.jwt.Jwt;
-
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class JwtTokenService {
+	// * lấy từ env
 	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor("thisIsMySuperSecretKeyWithAtLeast32Bytes!".getBytes());
 	private final Long EXPIRATION_TIME = 1000 * 60 * 60 * 24L; // 1 ngày
-	private final ObjectMapper objectMapper = new ObjectMapper();
-
-	private final Map<String, Class<?>> mapClass = new HashMap<String, Class<?>>() {
-		{
-			put(StudentDto.class.getSimpleName(), StudentDto.class);
-			put(TeacherDto.class.getSimpleName(), TeacherDto.class);
-		}
-	};
 
 	public <T> Map<String, String> generateToken(T instance) throws JsonProcessingException {
 		String jwt = Jwts.builder()
@@ -67,7 +56,7 @@ public class JwtTokenService {
 					.expiresAt(claims.getExpiration().toInstant())
 					.build();
 
-			addAuthorizationToken(jwt);
+			SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(jwt));
 
 			return jwt;
 		} catch (ExpiredJwtException e) {
@@ -79,12 +68,5 @@ public class JwtTokenService {
 
 			return null;
 		}
-	}
-
-	public void addAuthorizationToken(Jwt jwtToken) throws Error {
-		Map<String, Object> claims = jwtToken.getClaims();
-
-		Object instance = objectMapper.convertValue(claims.get("instance"), mapClass.get(jwtToken.getSubject()));
-		System.out.println(instance);
 	}
 }

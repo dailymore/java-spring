@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.spring.utils.security.JwtTokenService;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
