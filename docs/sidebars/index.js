@@ -31,7 +31,7 @@ const getMdFiles = (dir) => {
 
 const sidebarsDir = path.resolve(__dirname, "../sidebars");
 
-const order = ["theory", "implementation", "evaluation"];
+const order = ["theory", "implementation", "technical", "evaluation"];
 
 const groupedFiles = getMdFiles(sidebarsDir).reduce(
   (acc, { category, text, link }) => {

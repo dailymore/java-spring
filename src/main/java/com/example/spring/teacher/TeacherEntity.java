@@ -52,7 +52,7 @@ public class TeacherEntity {
 	@Column()
 	private int experience;
 
-	@Column()
+	@Column(nullable = false, unique = true)
 	private String phone;
 
 	@Column(nullable = false, unique = true)
