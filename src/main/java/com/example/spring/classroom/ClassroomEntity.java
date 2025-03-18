@@ -56,7 +56,7 @@ public class ClassroomEntity {
 	@Column(nullable = false)
 	private int size;
 
-	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "studentClass", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<StudentEntity> students = new ArrayList<StudentEntity>();
 
 	@ManyToMany

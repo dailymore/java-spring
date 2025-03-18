@@ -13,16 +13,16 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.example.spring.utils.dto.response.StudentDto;
-import com.example.spring.utils.dto.response.TeacherDto;
+import com.example.spring.auth.dto.response.StudentAuthDto;
+import com.example.spring.auth.dto.response.TeacherAuthDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserDetailResolver implements HandlerMethodArgumentResolver {
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private final Map<String, Class<?>> mapClass = new HashMap<String, Class<?>>() {
 		{
-			put(StudentDto.class.getSimpleName(), StudentDto.class);
-			put(TeacherDto.class.getSimpleName(), TeacherDto.class);
+			put(StudentAuthDto.class.getSimpleName(), StudentAuthDto.class);
+			put(TeacherAuthDto.class.getSimpleName(), TeacherAuthDto.class);
 		}
 	};
 

@@ -33,6 +33,8 @@ public class TeacherController {
 			@RequestParam(defaultValue = "") List<String> relations,
 			@UserDetail StudentDto student) {
 
+		System.out.println(student);
+
 		return this.teacherService.getListTeacher(new GetListTeacherReqDto(relations).getRelations());
 	}
 }
