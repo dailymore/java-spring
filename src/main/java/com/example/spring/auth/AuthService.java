@@ -2,8 +2,6 @@ package com.example.spring.auth;
 
 import static com.example.spring.utils.security.ArgonHash.verify;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,7 @@ public class AuthService {
 
 	public Object verifyAccount(String username, String password, String type) {
 		if (type.equals("student")) {
-			Optional<StudentAuthDto> student = this.studentRepository.findOneByStudentId(username).map(StudentAuthDto::new);
+			var student = this.studentRepository.findOneByStudentId(username).map(StudentAuthDto::new);
 
 			if (student.isEmpty())
 				throw new Error();
@@ -37,7 +35,7 @@ public class AuthService {
 		}
 
 		if (type.equals("teacher")) {
-			Optional<TeacherAuthDto> teacher = this.teacherRepo.findOneByEmailOrPhone(username).map(TeacherAuthDto::new);
+			var teacher = this.teacherRepo.findOneByEmailOrPhone(username).map(TeacherAuthDto::new);
 
 			if (teacher.isEmpty())
 				throw new Error();
