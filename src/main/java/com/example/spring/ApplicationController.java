@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("public")
 public class ApplicationController {
-	@GetMapping()
+	@GetMapping("a")
 	String helloSpringApp() {
 
 		return "Hello ndmc will be pro";

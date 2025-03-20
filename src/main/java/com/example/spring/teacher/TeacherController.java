@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,8 @@ public class TeacherController {
 			@RequestParam(defaultValue = "") List<String> relations,
 			@UserDetail StudentDto student) {
 
+		var auth = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth.getAuthorities());
 		System.out.println(student);
 
 		return this.teacherService.getListTeacher(new GetListTeacherReqDto(relations).getRelations());

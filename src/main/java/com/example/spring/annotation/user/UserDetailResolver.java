@@ -38,12 +38,16 @@ public class UserDetailResolver implements HandlerMethodArgumentResolver {
 			@Nullable ModelAndViewContainer mavContainer,
 			@NonNull NativeWebRequest webRequest,
 			@Nullable WebDataBinderFactory binderFactory) throws Exception {
-		var auth = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		try {
+			var auth = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
-		Object instance = objectMapper.convertValue(
-				auth.getTokenAttributes().get("instance"),
-				mapClass.get(auth.getName()));
+			Object instance = objectMapper.convertValue(
+					auth.getTokenAttributes().get("instance"),
+					mapClass.get(auth.getName()));
 
-		return instance;
+			return instance;
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
 	}
 }
