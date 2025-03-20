@@ -1,7 +1,6 @@
 package com.example.spring.auth;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.crypto.SecretKey;
